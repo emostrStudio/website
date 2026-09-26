@@ -41,7 +41,9 @@ jobs:
         if: github.event_name != 'pull_request'
         with:
           name: release
-          path: dist/release.tar.gz
+          path: |
+            dist/release.tar.gz
+            deploy/release.sh
           retention-days: 7
           if-no-files-found: error
 
@@ -49,36 +51,27 @@ jobs:
     name: Деплой на сервер
     needs: build
     if: github.ref == 'refs/heads/main' && github.event_name != 'pull_request'
-    runs-on: ubuntu-24.04
+    runs-on: [self-hosted, emostr-web]
     environment:
       name: production
       url: https://emostr.com
     concurrency:
       group: production
       cancel-in-progress: false
+    env:
+      APP_DIR: ${{ vars.DEPLOY_PATH || '/var/www/emostr' }}
     steps:
-      - uses: actions/checkout@v5
-
       - uses: actions/download-artifact@v4
         with:
           name: release
-          path: dist
-
-      - name: SSH-ключ
-        env:
-          SSH_PRIVATE_KEY: ${{ secrets.SSH_PRIVATE_KEY }}
-          SSH_KNOWN_HOSTS: ${{ secrets.SSH_KNOWN_HOSTS }}
-        run: |
-          install -d -m 700 ~/.ssh
-          printf '%s\n' "$SSH_PRIVATE_KEY" > ~/.ssh/id_ed25519
-          chmod 600 ~/.ssh/id_ed25519
-          printf '%s\n' "$SSH_KNOWN_HOSTS" > ~/.ssh/known_hosts
+          path: release
 
       - name: Выкладка релиза
-        env:
-          DEPLOY_HOST: ${{ vars.DEPLOY_HOST }}
-          DEPLOY_USER: ${{ vars.DEPLOY_USER || 'deploy' }}
-          DEPLOY_PORT: ${{ vars.DEPLOY_PORT || '22' }}
-          DEPLOY_PATH: ${{ vars.DEPLOY_PATH || '/var/www/emostr' }}
-          RELEASE_ARCHIVE: dist/release.tar.gz
-        run: bash deploy/deploy.sh
+        run: |
+          name="$(date -u +%Y%m%d-%H%M%S)-${GITHUB_SHA::7}"
+          install -m 644 release/dist/release.tar.gz "$APP_DIR/incoming/$name.tar.gz"
+          bash release/deploy/release.sh "$name"
+
+      - name: Очистка рабочей папки
+        if: always()
+        run: rm -rf release

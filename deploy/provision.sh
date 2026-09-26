@@ -4,12 +4,12 @@ set -euo pipefail
 here=$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)
 
 host=${DEPLOY_HOST:?provision: задайте DEPLOY_HOST — IP или домен сервера}
-ssh_user=${SSH_USER:-root}
+ssh_user=${SSH_USER:?provision: задайте SSH_USER — пользователя с sudo на сервере}
 port=${SSH_PORT:-22}
 remote_dir=/tmp/emostr-setup
 
 pass=()
-for name in DOMAIN EMAIL WITH_WWW DEPLOY_USER APP_DIR PORT NODE_MAJOR DEPLOY_KEYS SKIP_UFW; do
+for name in DOMAIN EMAIL WITH_WWW DEPLOY_USER APP_DIR PORT NODE_MAJOR DEPLOY_KEYS SKIP_UFW RUNNER_TOKEN RUNNER_URL RUNNER_LABELS; do
   if [[ -n ${!name:-} ]]; then
     pass+=("$name=$(printf '%q' "${!name}")")
   fi
