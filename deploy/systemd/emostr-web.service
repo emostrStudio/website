@@ -1,0 +1,26 @@
+[Unit]
+Description=emostrStudio website (Next.js)
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=__USER__
+Group=__USER__
+WorkingDirectory=__APP_DIR__/current
+Environment=NODE_ENV=production
+Environment=HOSTNAME=127.0.0.1
+Environment=PORT=__PORT__
+EnvironmentFile=-__APP_DIR__/shared/.env
+ExecStart=/usr/bin/node server.js
+Restart=always
+RestartSec=2
+TimeoutStopSec=15
+NoNewPrivileges=true
+PrivateTmp=true
+ProtectSystem=strict
+ProtectHome=true
+ReadWritePaths=__APP_DIR__
+
+[Install]
+WantedBy=multi-user.target

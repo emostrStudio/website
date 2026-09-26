@@ -11,8 +11,9 @@ const COLORS = [
   { rgb: [0xf4, 0x00, 0x06], ansi: 196 }
 ];
 const FOOTER = [
-  '\x1b[1memostr\x1b[0m \x1b[2m·\x1b[0m изучаю Ruby',
-  '\x1b[2mgithub.com/emostr · t.me/crefixa · mail@emostr.com\x1b[0m'
+  '\x1b[1memostr\x1b[0m\x1b[1;38;5;196mStudio\x1b[0m \x1b[2m·\x1b[0m студия веб-разработки',
+  'сайты · CRM · интернет-магазины · веб-сервисы',
+  '\x1b[2memostr.com · t.me/crefixa · mail@emostr.com\x1b[0m'
 ];
 
 function decodePng(buf) {
@@ -162,6 +163,6 @@ const footer = FOOTER.map(
 
 const output = ['', ...art, '', ...footer, '', ''].join('\n');
 
-writeFileSync(new URL('../static/curl', import.meta.url), output);
+writeFileSync(new URL('../public/curl', import.meta.url), output);
 process.stdout.write(output);
-console.log(`static/curl: ${art.length} строк × ${COLS} колонок`);
+console.log(`public/curl: ${art.length} строк × ${COLS} колонок`);

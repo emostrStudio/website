@@ -1,49 +1,61 @@
+import type { BrandIconId } from './icons';
+
 export const site = {
-  name: 'emostr',
+  name: 'emostrStudio',
   url: 'https://emostr.com',
-  title: 'emostr — личный сайт',
+  title: 'emostrStudio — разработка сайтов, CRM и веб-сервисов под ключ',
+  shortTitle: 'emostrStudio',
   description:
-    'Личный сайт emostr: изучаю Ruby, веду GitHub и собираю небольшие проекты вместе с нейросетью.'
+    'emostrStudio — студия веб-разработки. Делаем сайты под ключ, CRM, интернет-магазины и веб-сервисы на TypeScript, React, Next.js, Vue, Nuxt и Laravel. Скоро — собственные SaaS.',
+  tagline: 'Студия веб-разработки'
 } as const;
 
-export const maintenance = false;
+export const githubUrl = 'https://github.com/emostrStudio';
+export const telegramUrl = 'https://t.me/crefixa';
+export const email = 'mail@emostr.com';
 
-export const githubUrl = 'https://github.com/emostr';
+export type ContactIcon = Extract<BrandIconId, 'github' | 'telegram'> | 'mail';
 
 export type Contact = {
   id: string;
   label: string;
   value: string;
+  note: string;
   href: string;
-  icon: 'github' | 'telegram' | 'mail';
+  icon: ContactIcon;
 };
 
 export const contacts: Contact[] = [
   {
-    id: 'github',
-    label: 'GitHub',
-    value: 'github.com/emostr',
-    href: githubUrl,
-    icon: 'github'
-  },
-  {
     id: 'telegram',
     label: 'Telegram',
     value: '@crefixa',
-    href: 'https://t.me/crefixa',
+    note: 'Быстрее всего',
+    href: telegramUrl,
     icon: 'telegram'
   },
   {
     id: 'email',
     label: 'Почта',
-    value: 'mail@emostr.com',
-    href: 'mailto:mail@emostr.com',
+    value: email,
+    note: 'Для брифов и документов',
+    href: `mailto:${email}`,
     icon: 'mail'
+  },
+  {
+    id: 'github',
+    label: 'GitHub',
+    value: 'github.com/emostrStudio',
+    note: 'Наш открытый код',
+    href: githubUrl,
+    icon: 'github'
   }
 ];
 
 export const nav = [
-  { href: '#ruby', label: 'Ruby' },
-  { href: '#projects', label: 'Проекты' },
-  { href: '#contacts', label: 'Контакты' }
-];
+  { href: '/#services', label: 'Услуги' },
+  { href: '/#stack', label: 'Стек' },
+  { href: '/#projects', label: 'Проекты' },
+  { href: '/#process', label: 'Процесс' },
+  { href: '/#contacts', label: 'Контакты' }
+] as const;

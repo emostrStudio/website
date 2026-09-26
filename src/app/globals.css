@@ -1,0 +1,183 @@
+@import 'tailwindcss';
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme inline {
+  --font-sans: var(--font-onest), ui-sans-serif, system-ui, -apple-system, sans-serif;
+  --font-mono: var(--font-jetbrains), ui-monospace, 'SFMono-Regular', monospace;
+
+  --color-background: var(--background);
+  --color-surface: var(--surface);
+  --color-foreground: var(--foreground);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-border: var(--border);
+  --color-border-strong: var(--border-strong);
+  --color-primary: var(--primary);
+  --color-primary-hover: var(--primary-hover);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-text: var(--accent-text);
+
+  --color-brand-teal: #00c99f;
+  --color-brand-purple: #b455ff;
+  --color-brand-yellow: #e9cc00;
+  --color-brand-red: #f40006;
+
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+
+  --animate-marquee: marquee var(--marquee-duration, 40s) linear infinite;
+  --animate-enter: enter 0.9s var(--ease-out-expo) both;
+}
+
+:root {
+  --background: #ffffff;
+  --surface: #fafaf8;
+  --foreground: #1b1b18;
+  --muted-foreground: #6b6a65;
+  --border: #e7e6e1;
+  --border-strong: #d4d3cd;
+  --primary: #dc0510;
+  --primary-hover: #bd040d;
+  --primary-foreground: #ffffff;
+  --accent: #f40006;
+  --accent-text: #cf040d;
+  --grid-line: rgb(27 27 24 / 0.07);
+  --glow: rgb(244 0 6 / 0.09);
+  --scene-stroke: #1b1b18;
+  --scene-paper: #ffffff;
+  --scene-infra: #1b1b18;
+  --shadow-soft: 0 1px 2px rgb(27 27 24 / 0.06), 0 1px 1px rgb(27 27 24 / 0.04);
+
+  color-scheme: light;
+}
+
+.dark {
+  --background: #0a0a0a;
+  --surface: #111110;
+  --foreground: #ededea;
+  --muted-foreground: #9f9e98;
+  --border: #232321;
+  --border-strong: #32322f;
+  --primary: #e3060f;
+  --primary-hover: #f5202a;
+  --primary-foreground: #ffffff;
+  --accent: #f40006;
+  --accent-text: #ff5257;
+  --grid-line: rgb(237 237 234 / 0.06);
+  --glow: rgb(244 0 6 / 0.14);
+  --scene-stroke: #0a0a0a;
+  --scene-paper: #141413;
+  --scene-infra: #2a2a2d;
+  --shadow-soft: 0 1px 2px rgb(0 0 0 / 0.5);
+
+  color-scheme: dark;
+}
+
+@layer base {
+  *,
+  ::before,
+  ::after {
+    border-color: var(--border);
+  }
+
+  html {
+    scroll-behavior: smooth;
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+  }
+
+  ::selection {
+    background: var(--accent);
+    color: #ffffff;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  section[id] {
+    scroll-margin-top: 4rem;
+  }
+}
+
+@layer utilities {
+  .iso-grid {
+    background-image:
+      repeating-linear-gradient(30deg, var(--grid-line) 0 1px, transparent 1px 36px),
+      repeating-linear-gradient(150deg, var(--grid-line) 0 1px, transparent 1px 36px);
+  }
+
+  .hatch {
+    background-image: repeating-linear-gradient(
+      135deg,
+      var(--grid-line) 0 1px,
+      transparent 1px 10px
+    );
+  }
+
+  .fade-x {
+    mask-image: linear-gradient(to right, transparent, #000 12%, #000 88%, transparent);
+  }
+
+  .reveal {
+    animation: enter linear both;
+    animation-timeline: view();
+    animation-range: entry 0% entry 60%;
+  }
+
+  @supports not (animation-timeline: view()) {
+    .reveal {
+      animation: none;
+    }
+  }
+}
+
+@keyframes marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@keyframes enter {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes pipe-flow {
+  to {
+    stroke-dashoffset: -48;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  ::before,
+  ::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+  }
+
+  .reveal {
+    animation: none;
+  }
+}
