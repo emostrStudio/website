@@ -13,6 +13,7 @@ export const stack: StackItem[] = [
   { id: 'nuxt' },
   { id: 'php' },
   { id: 'laravel' },
+  { id: 'postgresql' },
   { id: 'nginx' },
   { id: 'ubuntu' },
   { id: 'docker' }

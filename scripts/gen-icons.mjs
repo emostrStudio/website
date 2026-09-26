@@ -9,6 +9,7 @@ const ICONS = {
   nuxt: 'siNuxt',
   php: 'siPhp',
   laravel: 'siLaravel',
+  postgresql: 'siPostgresql',
   nginx: 'siNginx',
   ubuntu: 'siUbuntu',
   docker: 'siDocker',
