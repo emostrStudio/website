@@ -155,6 +155,7 @@ rm -f /etc/nginx/sites-enabled/default
 render "$here/nginx/upstream.conf" > /etc/nginx/conf.d/emostr.conf
 render "$here/nginx/headers.conf" > /etc/nginx/snippets/emostr-headers.conf
 render "$here/nginx/locations.conf" > /etc/nginx/snippets/emostr-locations.conf
+render "$here/nginx/terminal.conf" > /etc/nginx/snippets/emostr-terminal.conf
 
 site=/etc/nginx/sites-available/emostr.conf
 cert="/etc/letsencrypt/live/$domain/fullchain.pem"
