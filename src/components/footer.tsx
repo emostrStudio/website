@@ -1,4 +1,5 @@
 import { Logo } from '@/components/logo';
+import { Requisites } from '@/components/requisites';
 import { contacts, nav, site } from '@/lib/data/site';
 import { externalProps } from '@/lib/utils';
 
@@ -46,6 +47,8 @@ export function Footer() {
             </ul>
           </div>
         </div>
+
+        <Requisites />
 
         <div className="flex flex-col gap-2 border-t border-dashed border-border-strong py-6 text-[13px] text-muted-foreground sm:flex-row sm:items-center sm:justify-between">
           <p>© {year} emostrStudio</p>
